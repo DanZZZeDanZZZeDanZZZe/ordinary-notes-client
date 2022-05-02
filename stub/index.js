@@ -3,6 +3,7 @@ const fs = require("fs")
 const express = require("express")
 const bodyParser = require("body-parser")
 const morgan = require("morgan")
+const cors = require("cors")
 
 const PORT = 3002
 const DATA_PATH = "data"
@@ -29,9 +30,10 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(morgan(":id :method :url :response-time"))
+app.use(morgan("tiny"))
+app.use(cors()) // Enable All CORS Requests
 
-app.get("/notes/1", async (req, res) => {
+app.get("/api/notes/1", async (req, res) => {
   const data = await readJSON("note-1")
 
   if (!data) {
@@ -43,7 +45,7 @@ app.get("/notes/1", async (req, res) => {
   res.json(data)
 })
 
-app.get("/notes/4", async (req, res) => {
+app.get("/api/notes/4", async (req, res) => {
   const data = await readJSON("todo-4")
 
   if (!data) {
@@ -55,7 +57,8 @@ app.get("/notes/4", async (req, res) => {
   res.json(data)
 })
 
-app.get("/notes/preview", async (req, res) => {
+app.get("/api/notes/all", async (req, res) => {
+  console.log("sedsdfdsfs")
   const data = await readJSON("notes-preview")
 
   if (!data) {
