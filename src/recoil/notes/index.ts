@@ -1,0 +1,1 @@
+export { allNotesAtom } from "./allNotesAtom"
